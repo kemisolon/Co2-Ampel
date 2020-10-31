@@ -1,20 +1,8 @@
 /*
-  Reading CO2, humidity and temperature from the SCD30
-  By: Nathan Seidle
-  SparkFun Electronics
-  Date: May 22nd, 2018
-  License: MIT. See license file for more information but you can
-  basically do whatever you want with this code.
+ZTL - Ampel
+http://ztl.space
 
-  Feel like supporting open source hardware?
-  Buy a board from SparkFun! https://www.sparkfun.com/products/15112
 
-  This example prints the current CO2 level, relative humidity, and temperature in C.
-
-  Hardware Connections:
-  Attach RedBoard to computer using a USB cable.
-  Connect SCD30 to RedBoard using Qwiic cable.
-  Open Serial Monitor at 115200 baud.
 */
 
 #include <Wire.h>
