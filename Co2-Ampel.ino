@@ -2,7 +2,7 @@
 ZTL - Ampel
 http://ztl.space
 
-
+tolles repoo
 */
 
 #include <Wire.h>
@@ -29,7 +29,7 @@ void setup()
 
   //The SCD30 has data ready every two seconds
 }
-bool blink=false; 
+bool blink=false;
 int ppm =0;
 void loop()
 {
