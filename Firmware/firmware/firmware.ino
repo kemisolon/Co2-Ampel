@@ -10,7 +10,7 @@ http://ztl.space
 #include <Adafruit_NeoPixel.h>
 #include "SparkFun_SCD30_Arduino_Library.h" //Click here to get the library: http://librarymanager/All#SparkFun_SCD30
 #define PIN         6
-#define NUMPIXELS   5
+#define NUMPIXELS   9
 SCD30 airSensor;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
@@ -20,7 +20,7 @@ void setup() {
     Serial.println("SCD30 Example");
     Wire.begin();
     pixels.begin();
-    pixels.setBrightness(100);
+    pixels.setBrightness(150);
     if (airSensor.begin() == false) {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1);
