@@ -20,11 +20,12 @@ void setup() {
     Wire.begin();
     pixels.begin();
     pixels.setBrightness(150);
-    setColor(0,0,255);
+    setColor(0,0,0);
     if (airSensor.begin() == false) {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1);
     }
+
 }
 
 void setColor(int r, int g, int b ){
@@ -38,22 +39,18 @@ void blinkRed(long freq)
 {
   static unsigned long previousMillis = 0;
   static bool ledState;
-
   unsigned long currentMillis = millis();
  
-  if((ledState == HIGH) && (currentMillis - previousMillis >= freq))
-  {
+  if((ledState == HIGH) && (currentMillis - previousMillis >= freq)){
     ledState = LOW;
     previousMillis = currentMillis;
     setColor(0,0,0);
   }
-  else if ((ledState == LOW) && (currentMillis - previousMillis >= freq))
-  {
+  else if ((ledState == LOW) && (currentMillis - previousMillis >= freq)){
     ledState = HIGH;  // turn it on
     previousMillis = currentMillis;
     setColor(255,0,0);
   }
-
 }
 
 void loop() {
