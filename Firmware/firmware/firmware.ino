@@ -26,7 +26,7 @@ void setup() {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1);
     }
-    airSensor.setMeasurementInterval(4);
+    airSensor.setMeasurementInterval(1);
 }
 
 void setColor(int r, int g, int b ){
