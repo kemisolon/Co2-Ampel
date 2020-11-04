@@ -1,8 +1,6 @@
 /*
 ZTL - Ampel
 http://ztl.space
-
-
 */
 
 #include <Arduino.h>
@@ -17,23 +15,51 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 void setup() {
 
     Serial.begin(115200);
-    Serial.println("SCD30 Example");
+    Serial.println("ZTL - Zentrum fuer Technikkultur Landau");
+    Serial.println("http://ztl.space");
     Wire.begin();
     pixels.begin();
     pixels.setBrightness(150);
+    setColor(0,0,255);
     if (airSensor.begin() == false) {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1);
     }
-
-    //The SCD30 has data ready every two seconds
 }
+
+void setColor(int r, int g, int b ){
+  for(int i=0; i<NUMPIXELS; i++) {
+          pixels.setPixelColor(i, pixels.Color(r,g, b));
+    }
+   pixels.show();
+}
+
+void blinkRed(long freq)
+{
+  static unsigned long previousMillis = 0;
+  static bool ledState;
+
+  unsigned long currentMillis = millis();
+ 
+  if((ledState == HIGH) && (currentMillis - previousMillis >= freq))
+  {
+    ledState = LOW;
+    previousMillis = currentMillis;
+    setColor(0,0,0);
+  }
+  else if ((ledState == LOW) && (currentMillis - previousMillis >= freq))
+  {
+    ledState = HIGH;  // turn it on
+    previousMillis = currentMillis;
+    setColor(255,0,0);
+  }
+
+}
+
 void loop() {
-
-    static bool blink = false;
     int ppm =0;
-
-    if (airSensor.dataAvailable()) {
+    
+     if(airSensor.dataAvailable()) {
         ppm = airSensor.getCO2();
         Serial.print("co2(ppm):");
         Serial.print(ppm);
@@ -45,40 +71,21 @@ void loop() {
         Serial.print(airSensor.getHumidity(), 1);
 
         Serial.println();
-        delay(500);
+    }
 
-    }
-    else {
-        Serial.println("Waiting for new data");
-    }
     switch(ppm) {
-        case 400 ... 700: //grün
-            for(int i=0; i<NUMPIXELS; i++) {
-                pixels.setPixelColor(i, pixels.Color(0,255, 0));
-            }
+        case 1 ... 700: //grün
+            setColor(0,255,0);
             break;
         case 701 ... 1000: //gelb
-            for(int i=0; i<NUMPIXELS; i++) {
-                pixels.setPixelColor(i, pixels.Color(255,255, 0));
-            }
+            setColor(255,255,0);
             break;
         case 1001 ... 2000: //rot
-            for(int i=0; i<NUMPIXELS; i++) {
-                pixels.setPixelColor(i, pixels.Color(255,0, 0));
-            }
+            setColor(255,0,0);
             break;
-        case 2001 ... 5000:// rot -blinkend
-            for(int i=0; i<NUMPIXELS; i++) {
-                if(blink) {
-                    pixels.setPixelColor(i, pixels.Color(255,0, 0));
-                }
-                else {
-                    pixels.setPixelColor(i, pixels.Color(0,0, 0));
-                }
-            }
-            blink= !blink;
+        case 2001 ... 9999:// rot -blinkend
+            blinkRed(500);
             break;
     }
-    pixels.show();
-    delay(500);
+  
 }
