@@ -19,13 +19,13 @@ void setup() {
     Serial.println("http://ztl.space");
     Wire.begin();
     pixels.begin();
-    pixels.setBrightness(150);
+    pixels.setBrightness(255);
     setColor(0,0,0);
     if (airSensor.begin() == false) {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1);
     }
-
+    airSensor.setMeasurementInterval(4);
 }
 
 void setColor(int r, int g, int b ){
@@ -84,5 +84,4 @@ void loop() {
             blinkRed(500);
             break;
     }
-  
 }
