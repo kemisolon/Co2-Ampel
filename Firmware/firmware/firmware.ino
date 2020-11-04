@@ -20,6 +20,7 @@ void setup() {
     Wire.begin();
     pixels.begin();
     pixels.setBrightness(255);
+    rainbow(10);
     setColor(0,0,0);
     if (airSensor.begin() == false) {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
@@ -52,7 +53,16 @@ void blinkRed(long freq)
     setColor(255,0,0);
   }
 }
-
+void rainbow(int wait) {
+  for (long firstPixelHue = 0; firstPixelHue < 5 * 65536; firstPixelHue += 256) {
+    for (int i = 0; i < pixels.numPixels(); i++) { // For each pixel in pixels...
+      int pixelHue = firstPixelHue + (i * 65536L / pixels.numPixels());
+      pixels.setPixelColor(i, pixels.gamma32(pixels.ColorHSV(pixelHue)));
+    }
+    pixels.show(); // Update pixels with new contents
+    delay(wait);  // Pause for a moment
+  }
+}
 void loop() {
     int ppm =0;
     
