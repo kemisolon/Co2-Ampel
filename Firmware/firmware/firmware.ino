@@ -15,18 +15,22 @@ Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 void setup() {
 
     Serial.begin(115200);
-    Serial.println("ZTL - Zentrum fuer Technikkultur Landau");
-    Serial.println("http://ztl.space");
     Wire.begin();
-    pixels.begin();
-    pixels.setBrightness(255);
-    rainbow(10);
-    setColor(0,0,0);
     if (airSensor.begin() == false) {
         Serial.println("Air sensor not detected. Please check wiring. Freezing...");
         while (1);
     }
-    airSensor.setMeasurementInterval(1);
+
+    airSensor.setAutoSelfCalibration(false); // no auto calibration
+    airSensor.setMeasurementInterval(2);     // CO2-Messung alle 5 s
+    Serial.println("ZTL - Zentrum fuer Technikkultur Landau");
+    Serial.println("http://ztl.space");
+    Serial.println("Firmware Version 1.0");
+    pixels.begin();
+    pixels.setBrightness(255);
+    setColor(0,0,0);
+
+    //rainbow(10); //Party Mode :-)
 }
 
 void setColor(int r, int g, int b ){
@@ -63,8 +67,9 @@ void rainbow(int wait) {
     delay(wait);  // Pause for a moment
   }
 }
+ int ppm =0;
 void loop() {
-    int ppm =0;
+   
     
      if(airSensor.dataAvailable()) {
         ppm = airSensor.getCO2();
@@ -80,18 +85,33 @@ void loop() {
         Serial.println();
     }
 
-    switch(ppm) {
-        case 1 ... 700: //grün
-            setColor(0,255,0);
-            break;
-        case 701 ... 1000: //gelb
-            setColor(255,255,0);
-            break;
-        case 1001 ... 2000: //rot
-            setColor(255,0,0);
-            break;
-        case 2001 ... 9999:// rot -blinkend
+
+
+    if (  ppm  <  1000 ) //0 ...1000 Grün
+    {
+      setColor(0,255,0);
+      //Serial.print("green");
+    }
+    else
+    {
+        if (ppm  <  1400 ) //1001 ...1400 Gelb
+        {
+          setColor(255,255,0);
+          //Serial.print("yellow");
+        }
+        else
+        {
+          if (ppm  <  2000 ) //1401 ...2000 Rot
+          {
+             setColor(255,0,0);
+            //Serial.print("red");
+          }
+          else // > 2000 Rot blinkend
+          {
             blinkRed(500);
-            break;
+            //Serial.print("red Blink");
+
+          }
+        }
     }
 }
