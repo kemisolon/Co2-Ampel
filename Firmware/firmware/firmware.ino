@@ -67,11 +67,11 @@ void rainbow(int wait) {
     delay(wait);  // Pause for a moment
   }
 }
- int ppm =0;
+int ppm =0;
 void loop() {
    
     
-     if(airSensor.dataAvailable()) {
+   if(airSensor.dataAvailable()) {
         ppm = airSensor.getCO2();
         Serial.print("co2(ppm):");
         Serial.print(ppm);
@@ -84,8 +84,6 @@ void loop() {
 
         Serial.println();
     }
-
-
 
     if (  ppm  <  1000 ) //0 ...1000 Grün
     {
@@ -110,7 +108,6 @@ void loop() {
           {
             blinkRed(500);
             //Serial.print("red Blink");
-
           }
         }
     }
