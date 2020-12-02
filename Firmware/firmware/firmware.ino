@@ -8,7 +8,7 @@
 #include <Adafruit_NeoPixel.h>
 #include "SparkFun_SCD30_Arduino_Library.h" //Click here to get the library: http://librarymanager/All#SparkFun_SCD30
 #define PIN         6
-#define NUMPIXELS   9 // oder 9 oder 17 LEDs
+#define NUMPIXELS   17 // oder 9 oder 17 LEDs
 SCD30 airSensor;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 
