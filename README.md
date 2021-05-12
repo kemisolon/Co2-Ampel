@@ -16,4 +16,5 @@ rot   1000-2000ppm
 rot-blinkend >2000ppm
 
 ## Gehäuse
-![GitHub Logo](https://github.com/kemisolon/Co2-Ampel/blob/main/Gehäuse/Co2_Ampel_ZTL%20v17.jpg?raw=true)
+![Die Ampel](https://github.com/kemisolon/Co2-Ampel/blob/main/Doku/Ampel.jpg?raw=true?raw=true)
+![Die Ampel offen](https://github.com/kemisolon/Co2-Ampel/blob/main/Doku/Ampel_offen.jpg?raw=true?raw=true)
